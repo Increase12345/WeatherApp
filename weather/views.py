@@ -20,13 +20,15 @@ def index(request):
 
     for city in cities:
         res = requests.get(url.format(city.name)).json()
-        city_info = {
-            "city": city.name,
-            "temp": res["main"]["temp"],
-            "icon": res["weather"][0]["icon"]
-        }
-
-        all_cities.append(city_info)
+        try:
+            city_info = {
+                "city": city.name,
+                "temp": res["main"]["temp"],
+                "icon": res["weather"][0]["icon"]
+            }
+            all_cities.append(city_info)
+        except KeyError:
+            print("Error")
 
     context = {"all_info": all_cities, "form": form}
 
